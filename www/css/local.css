@@ -1,0 +1,62 @@
+.navbar{
+  background-color: #262f89;
+}
+
+.page-header{
+  text-align: center;
+}
+
+span{
+  text-align: center;
+  margin: auto;
+}
+
+.step {
+    text-align: center;
+    color:#262f89;
+}
+
+ .step .col-md-3 {
+     background-color: #fff;
+     height: 150px;
+     border: 1px solid #C0C0C0;
+     border-right: none;
+     vertical-align: central;
+ }
+
+.step .col-md-3:last-child {
+    border: 1px solid #C0C0C0;
+}
+
+.step .col-md-3:first-child {
+    border-radius: 5px 0 0 5px;
+}
+
+.step .col-md-3:last-child {
+    border-radius: 0 5px 5px 0;
+}
+
+.step .col-md-3:hover {
+    color: #50c7e8;
+    cursor: pointer;
+}
+
+.step .activestep {
+    color: #50c7e8;
+    height: 150px;
+   
+    border-top: 3px solid #262f89 !important;
+    border-bottom: 3px solid #262f89 !important;
+    vertical-align: central;
+}
+
+.step .fa {
+    font-size: 80px;
+    padding: auto;
+}
+
+.buttons{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
