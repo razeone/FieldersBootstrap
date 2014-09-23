@@ -33,25 +33,48 @@
 
         <meta name="msapplication-tap-highlight" content="no" />
 
-        <title>Hello World</title>
+        <title>Telmex Maps</title>
     </head>
     <body>
         <div class="app">
-            <nav class="navbar navbar-inverse" role="navigation">
-                <div class="container">
-                    <button type="button" class="btn btn-default navbar-btn">Mensajes <span class="fa fa-circle-o"></span></button>
+            <nav class="navbar navbar-default" role="navigation">
+              <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand" href="#">Telmex C4 Fielders</a>
                 </div>
+
+                  <ul class="nav nav-pills navbar-nav navbar-right">
+                    <li><button type="button" class="btn btn-default btn-lg navbar-btn"><span class="fa fa-envelope"></span> Inbox <span class="badge">12</span></button></li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+                      <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div><!-- /.navbar-collapse -->
+              </div><!-- /.container-fluid -->
             </nav>
             <div class="container">
                 <!-- Steps Navigation - START -->
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-12" id="map-canvas" style="height: 500px"></div>
+                        <div class="col-md-12" id="map-canvas" style="height: 600px"></div>
                         <div class="col-md-12 buttons">
                             <div class="btn-group btn-group-lg">
-                              <button type="button" class="btn btn-primary btn-lg"><span class="fa fa-map-marker"></span> Check-In</button>
+                              <button id="checkIn" type="button" class="btn btn-primary btn-lg"><span class="fa fa-map-marker"></span> Check-In</button>
                               <button type="button" class="btn btn-primary btn-lg"><span class="fa fa-location-arrow"></span> Obtener Puntos</button>
-                              <button type="button" class="btn btn-primary btn-lg"><span class="fa fa-filter"></span> Filtrar</button>
                             </div>
                         </div>
                     </div>
