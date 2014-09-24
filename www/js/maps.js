@@ -1,5 +1,48 @@
 $(function(){
 	var map;
+	var lat;
+	var lng;
+
+	function getIcon(nps){
+		switch(nps){
+			case '0':
+			case '1':
+			case '2':
+			case '3':
+			case '4':
+			case '5':
+			case '6':
+				var flag = 'img/flag-red.png';
+				return flag;
+				break;
+			case '7':
+			case '8':
+				var flag = 'img/flag-yellow.png';
+				return flag;
+				break;
+			case '9':
+			case '10':
+				var flag = 'img/flag-green.png';
+				return flag;
+				break;
+			default:
+				var flag = 'img/flag-blue.png';
+				return flag;
+				break;
+		}
+	};
+
+	function addInfoWindow(marker, message) {
+            var info = message;
+
+            var infoWindow = new google.maps.InfoWindow({
+                content: message
+            });
+
+            google.maps.event.addListener(marker, 'click', function () {
+                infoWindow.open(map, marker);
+            });
+        };
 
 	function initializeMap() {
 
@@ -52,13 +95,15 @@ $(function(){
 	*/
 		var myLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
+		lat = position.coords.latitude;
+		lng = position.coords.longitude;
 		//Here I must call to the check-in REST service
 	  	$.ajax({
 	  		type: "POST",
 	  		url: "http://localhost:4567/checkIn",
 	  		data: { nombre: 'FielderId1512', id: "15121988", latitud: position.coords.latitude, longitud: position.coords.longitude }
 	  	}).done(function(msg){
-	  		console.log('Success');
+	  		console.log(msg);
 	  	});
 
 		map.setCenter(myLatLng);
@@ -74,13 +119,70 @@ $(function(){
 	      position: myLatLng,
 	      map: map,
 	      icon: 'img/register.png',
-	      title: 'Telmex'
+	      title: 'Fielder'
 	  	});
 
 	  	google.maps.event.addListener(fielder, 'click', function() {
 	  		infowindow.open(map,fielder);
 	  	});
 
+	};
+
+	var getPoints = function(position){
+
+		lat = position.coords.latitude;
+		lng = position.coords.longitude;
+
+		$.ajax({
+			type: "POST",
+			url: "http://localhost:4567/getPoints",
+			data: {latitud: lat, longitud: lng, distancia: 3}
+		}).done(function(data){
+
+			var data = JSON.parse(data);
+			//console.log(data.length);
+
+			var fielderLocation = new google.maps.LatLng(lat, lng);
+			map.setCenter(fielderLocation);
+
+			var fielder = new google.maps.Marker({
+		      position: fielderLocation,
+		      map: map,
+		      icon: 'img/register.png',
+		      title: 'Telmex'
+		  	});
+
+
+			for(i = 0;i<data.length;i++){
+					//Marker + infowindow + angularjs compiled ng-click
+					var contentString = "<div><p>Nombre: "+data[i].nombre+"</p>"+
+										"<p>Teléfono: "+data[i].telefono+"</p>"+
+										"<p>Área: "+data[i].area+"</p>"+
+										"<p>División: "+data[i].division+"</p>"+
+										"<p>NPS: "+data[i].nps+"</p>"+
+										"<p>Tenencia: "+data[i].paquete+"</p>"+
+										"<button class='button icon ion-location button-balanced'>Respuesta Cliente</button></div>";
+
+					//var compiled = $compile(contentString)($scope);
+					//var compiled = contentString;
+					//$('.footer').append(contentString);
+					var customareLocation = new google.maps.LatLng(data[i].latitud, data[i].longitud);
+					var infowindow = new google.maps.InfoWindow({
+						content: contentString
+					});
+
+
+					var customare = new google.maps.Marker({
+					    position: customareLocation,
+					    map: map,
+					    title: 'Cliente',
+					    icon: getIcon(data[i].nps)
+					  	});
+
+					addInfoWindow(customare,contentString);
+				}
+			
+		});
 	};
 
 	// onError Callback receives a PositionError object
@@ -96,6 +198,6 @@ $(function(){
 	});
 
 	$('#getPoints').click(function(){
-		
+		navigator.geolocation.getCurrentPosition(getPoints, onError);
 	});
 });
