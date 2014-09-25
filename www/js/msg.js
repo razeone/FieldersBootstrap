@@ -10,7 +10,7 @@ var app =
 	bindEvents: function()
 	{
 		document.addEventListener('deviceready', this.onStart, false);
-		//document.addEventListener('backbutton', this.onClose, false);
+		document.addEventListener('backbutton', this.onClose, false);
 	},
 	onStart: function()
 	{
@@ -36,8 +36,7 @@ var app =
 				},
 				function()
 				{
-					navigator.notification.alert(evento.content, function() {}, evento.channel);
-					navigator.notification.vibrate(500);
+					lista.innerHTML += (evento.channel + ": " + evento.content + "<br/>");
 				});
 			});
 		}
@@ -76,7 +75,8 @@ var app =
 	onClose: function()
 	{
 		if( socket ) { socket.disconnect(); }
-		navigator.app.exitApp();
+		//navigator.app.exitApp();
+		window.history.back();
 	}
 };
 
